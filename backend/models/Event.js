@@ -1,24 +1,25 @@
 import mongoose from "mongoose";
 
-const userSchema = new mongoose.Schema({
-  firstName: {
+const eventSchema = new mongoose.Schema({
+  title: {
     type: String,
     required: true,
   },
-  lastName: {
+  description: {
     type: String,
     required: true,
   },
-  username: {
+  date: {
+    type: Date,
+    required: true,
+  },
+  location: {
     type: String,
     required: true,
   },
-  email: {
-    type: String,
-    required: true,
-  },
-  password: {
-    type: String,
+  organiser: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
     required: true,
   },
   createdAt: {
@@ -27,4 +28,4 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model("User", userSchema);
+export default mongoose.model("Event", eventSchema);
