@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { registerUser } from "../../services/userService";
+import { registerUser, checkUsername } from "../../services/userService";
 import { useEffect, useState } from "react";
 import styles from "./RegisterForm.module.scss";
 import { useNavigate } from "react-router-dom";
@@ -13,12 +13,26 @@ export default function RegisterForm() {
   const [password, setPassword] = useState("");
 
   const [errors, setErrors] = useState({});
+  const [usernameExists, setUsernameExists] = useState(false);
 
   const [isSuccess, setIsSuccess] = useState(false);
   const [countdown, setCountdown] = useState(10);
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+
+  useEffect(() => {
+    const checkUsernameAvailability = async () => {
+      if (username) {
+        const exists = await checkUsername(username);
+        setUsernameExists(exists);
+      } else {
+        setUsernameExists(false);
+      }
+    };
+
+    checkUsernameAvailability();
+  }, [username]);
 
   const { mutate, isError, error } = useMutation({
     mutationFn: async (userData) => {
@@ -52,11 +66,11 @@ export default function RegisterForm() {
         <h2>Registration Successful</h2>
         <p>You can now log in with your username and password.</p>
         <p>
-          Redirecting back to the homepage in <strong>{countdown}</strong>{" "}
+          Redirecting back to the login page in <strong>{countdown}</strong>{" "}
           seconds...
         </p>
         <button onClick={() => navigate("/")}>
-          Go back to the homepage now
+          Go back to the login page now
         </button>
       </div>
     );
@@ -73,10 +87,9 @@ export default function RegisterForm() {
       password,
     });
 
-    if (validationErrors) {
-      setErrors(validationErrors);
-      return;
-    }
+    setErrors(validationErrors || {});
+
+    if (validationErrors || usernameExists) return;
 
     const requestBody = {
       firstName,
@@ -116,7 +129,11 @@ export default function RegisterForm() {
           onChange={(e) => setUsername(e.target.value)}
           required
         />
-        {errors.username && <p className={styles.error}>{errors.username}</p>}
+        {usernameExists && (
+          <p className={styles.error}>
+            Username already exists. Please choose another.
+          </p>
+        )}
         <input
           type="email"
           placeholder="Email"

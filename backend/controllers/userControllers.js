@@ -70,3 +70,18 @@ export async function getUsers(req, res) {
 
   res.json(users);
 }
+
+export async function checkUsernameExists(req, res) {
+  try {
+      const { username } = req.params;
+      const user = await User.findOne({ username });
+
+      if (user) {
+          return res.status(200).json({ exists: true });
+      }
+
+      res.status(200).json({ exists: false });
+  } catch (error) {
+      res.status(500).json({ error: 'Internal server error' });
+  }
+}

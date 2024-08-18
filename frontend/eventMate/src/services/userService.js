@@ -7,3 +7,8 @@ export async function registerUser(userdata){
 
     return response.data;
 }
+
+export async function checkUsername(username) {
+    const response = await axios.get(`${API_URL}/users/check-username/${username}`);
+    return response.data.exists;
+}
