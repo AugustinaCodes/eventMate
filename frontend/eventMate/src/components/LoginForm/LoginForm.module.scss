@@ -1,0 +1,91 @@
+@import "../../styles//variables.scss";
+
+.formContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: $background-color;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+  }
+  
+  h2 {
+    color: white;
+    font-family: "CelebriSans-Bold", sans-serif;
+    text-align: center;
+  }
+  
+  input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  input::placeholder {
+    color: #888;
+  }
+  
+  button {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: #007bff; /* Primary button color */
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+  }
+
+  .submitButton {
+    padding: 10px;
+    background-color: #FF4500;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: #3266ba;
+      transform: scale(1.05);
+    }
+  }
+
+  .backButton {
+    background-color: #ccc; /* Example color */
+    border: none;
+    color: #000;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .backButton:hover {
+    background-color: #f0eeee; 
+    transform: scale(1.05);
+  }
+  
+  .error {
+    color: white; /* Red color for error messages */
+    margin-top: 1rem;
+  }

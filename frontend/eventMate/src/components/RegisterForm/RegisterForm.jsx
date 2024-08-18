@@ -34,7 +34,7 @@ export default function RegisterForm() {
         setCountdown((prev) => prev - 1);
       }, 1000);
     } else if (countdown === 0) {
-      navigate("/");
+      navigate("/login");
     }
     return () => clearInterval(timer);
   }, [isSuccess, countdown, navigate]);
