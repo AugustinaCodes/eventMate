@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import styles from "./RegisterForm.module.scss";
 import { useNavigate } from "react-router-dom";
 import { validateUser } from "../../validation/userValidation";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function RegisterForm() {
   const [firstName, setFirstName] = useState("");
@@ -14,6 +15,7 @@ export default function RegisterForm() {
 
   const [errors, setErrors] = useState({});
   const [usernameExists, setUsernameExists] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   const [isSuccess, setIsSuccess] = useState(false);
   const [countdown, setCountdown] = useState(10);
@@ -69,7 +71,7 @@ export default function RegisterForm() {
           Redirecting back to the login page in <strong>{countdown}</strong>{" "}
           seconds...
         </p>
-        <button onClick={() => navigate("/")}>
+        <button onClick={() => navigate("/login")}>
           Go back to the login page now
         </button>
       </div>
@@ -142,21 +144,37 @@ export default function RegisterForm() {
           required
         />
         {errors.email && <p className={styles.error}>{errors.email}</p>}
-        <input
+        <div className={styles.passwordContainer}>
+          <input
+            type={passwordVisible ? "text" : "password"}
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button
+            type="button"
+            className={styles.eyeButton}
+            onClick={() => setPasswordVisible(!passwordVisible)}
+          >
+            {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+          </button>
+        </div>
+        {/* <input
           type="password"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        {errors.password && <p className={styles.error}>{errors.password}</p>}
+        {errors.password && <p className={styles.error}>{errors.password}</p>} */}
         <button type="submit" className={styles.submitButton}>
           Register
         </button>
         <button
           type="button"
           className={styles.backButton}
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/")}
         >
           Back
         </button>
