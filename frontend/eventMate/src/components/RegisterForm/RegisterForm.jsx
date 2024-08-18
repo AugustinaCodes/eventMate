@@ -114,6 +114,13 @@ export default function RegisterForm() {
         <button type="submit" className={styles.submitButton}>
           Register
         </button>
+        <button
+          type="button"
+          className={styles.backButton}
+          onClick={() => navigate(-1)}
+        >
+          Back
+        </button>
       </form>
     </div>
   );

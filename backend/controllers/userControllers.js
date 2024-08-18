@@ -1,4 +1,9 @@
 import User from "../models/User.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv"
+
+dotenv.config();
 
 export async function registerUser(req, res) {
   const { firstName, lastName, username, email, password } = req.body;
@@ -13,12 +18,15 @@ export async function registerUser(req, res) {
   }
 
   try {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
     const newUser = new User({
       firstName,
       lastName,
       username,
       email,
-      password,
+      password: hashedPassword,
     });
 
     await newUser.save();
@@ -35,15 +43,25 @@ export async function registerUser(req, res) {
 export async function loginUser(req, res) {
   const { username, password } = req.body;
 
-  try {
-    const user = await User.findOne({ username });
+  if (!username || !password) {
+    return res.status(400).json({ error: "Username and password are required"})
+  }
 
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-  } catch (error) {
-    console.log("Error logging in user", error);
-    res.status(500).json({ message: "Error logging in", error });
+  const user = await User.findOne({ username });
+
+  if (!user) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  const isPasswordCorrect = await bcrypt.compare(password, user.password);
+
+  if (isPasswordCorrect) {
+    const secretKey = process.env.SECRET_KEY;
+    const token = jwt.sign({ id: user._id, username: user.username}, secretKey, { expiresIn: "1h"})
+
+    res.json({ token })
+  } else {
+    res.status(401).json({ message: "Password incorrect"})
   }
 }
 
