@@ -99,3 +99,13 @@ input:focus {
   background-color: #f0eeee; 
   transform: scale(1.05);
 }
+
+.error {
+  color: #dc3545; /* Red color for error messages */
+  background-color: white;
+  font-size: 14px;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  padding: 5px;
+}

@@ -3,6 +3,7 @@ import { registerUser } from "../../services/userService";
 import { useEffect, useState } from "react";
 import styles from "./RegisterForm.module.scss";
 import { useNavigate } from "react-router-dom";
+import { validateUser } from "../../validation/userValidation";
 
 export default function RegisterForm() {
   const [firstName, setFirstName] = useState("");
@@ -10,6 +11,8 @@ export default function RegisterForm() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const [errors, setErrors] = useState({});
 
   const [isSuccess, setIsSuccess] = useState(false);
   const [countdown, setCountdown] = useState(10);
@@ -61,6 +64,20 @@ export default function RegisterForm() {
 
   function handleSubmit(e) {
     e.preventDefault();
+
+    const validationErrors = validateUser({
+      firstName,
+      lastName,
+      username,
+      email,
+      password,
+    });
+
+    if (validationErrors) {
+      setErrors(validationErrors);
+      return;
+    }
+
     const requestBody = {
       firstName,
       lastName,
@@ -83,6 +100,7 @@ export default function RegisterForm() {
           onChange={(e) => setFirstName(e.target.value)}
           required
         />
+        {errors.firstName && <p className={styles.error}>{errors.firstName}</p>}
         <input
           type="text"
           placeholder="Last Name"
@@ -90,6 +108,7 @@ export default function RegisterForm() {
           onChange={(e) => setLastName(e.target.value)}
           required
         />
+        {errors.lastName && <p className={styles.error}>{errors.lastName}</p>}
         <input
           type="text"
           placeholder="Username"
@@ -97,6 +116,7 @@ export default function RegisterForm() {
           onChange={(e) => setUsername(e.target.value)}
           required
         />
+        {errors.username && <p className={styles.error}>{errors.username}</p>}
         <input
           type="email"
           placeholder="Email"
@@ -104,6 +124,7 @@ export default function RegisterForm() {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
+        {errors.email && <p className={styles.error}>{errors.email}</p>}
         <input
           type="password"
           placeholder="Password"
@@ -111,6 +132,7 @@ export default function RegisterForm() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+        {errors.password && <p className={styles.error}>{errors.password}</p>}
         <button type="submit" className={styles.submitButton}>
           Register
         </button>
