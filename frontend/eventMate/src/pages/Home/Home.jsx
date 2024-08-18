@@ -1,27 +1,29 @@
-import { useState } from "react";
 import styles from "./Home.module.scss";
 import { FaRegCalendarAlt } from "react-icons/fa";
-import RegisterForm from "../../components/RegisterForm/RegisterForm";
-import LoginForm from "../../components/LoginForm/LoginForm";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 export default function Home() {
-  const [showForm, setShowForm] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const currentPath = location.pathname;
 
   function handleButtonClick(formType) {
-    setShowForm(formType);
+    navigate(`/${formType}`);
   }
+
+  const isHomePage = currentPath === "/";
 
   return (
     <div className={styles.container}>
       <div className={styles.leftPane}>
         <FaRegCalendarAlt className={styles.icon} />
-        <h1 className={styles.companyName}>Eventmate</h1>
+        <h1 className={styles.companyName}>EventMate</h1>
         <p className={styles.slogan}>
           Bringing People Together, One Event at a Time
         </p>
       </div>
       <div className={styles.rightPane}>
-        {!showForm && (
+        {isHomePage && (
           <div className={styles.buttons}>
             <button
               onClick={() => handleButtonClick("register")}
@@ -37,8 +39,7 @@ export default function Home() {
             </button>
           </div>
         )}
-        {showForm === "register" && <RegisterForm />}
-        {showForm === "login" && <LoginForm />}
+        <Outlet />
       </div>
     </div>
   );
