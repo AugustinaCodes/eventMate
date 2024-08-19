@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import styles from "./RegisterForm.module.scss";
 import { useNavigate } from "react-router-dom";
 import { validateUser } from "../../validation/userValidation";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
 import SuccessMessage from "./SuccessMessage";
+import PasswordToggle from "./PasswordToggle";
 
 export default function RegisterForm() {
   const [firstName, setFirstName] = useState("");
@@ -133,22 +133,12 @@ export default function RegisterForm() {
           required
         />
         {errors.email && <p className={styles.error}>{errors.email}</p>}
-        <div className={styles.passwordContainer}>
-          <input
-            type={passwordVisible ? "text" : "password"}
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <button
-            type="button"
-            className={styles.eyeButton}
-            onClick={() => setPasswordVisible(!passwordVisible)}
-          >
-            {passwordVisible ? <FaEyeSlash /> : <FaEye />}
-          </button>
-        </div>
+        <PasswordToggle
+          passwordVisible={passwordVisible}
+          togglePasswordVisibility={() => setPasswordVisible(!passwordVisible)}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
         <button type="submit" className={styles.submitButton}>
           Register
         </button>
