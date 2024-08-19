@@ -14,6 +14,7 @@ function App() {
         <Route path="/login" element={<LoginForm />} />
       </Route>
       <Route path="/main" element={<Dashboard />}>
+        <Route index element={<Events />} />
         <Route path="events" element={<Events />} />
         <Route path="attendees" element={<Attendees />} />
       </Route>
