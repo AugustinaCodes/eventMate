@@ -9,7 +9,6 @@ import {
 import styles from "./Events.module.scss";
 
 export default function Events() {
-  // Separate state for each form field
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
@@ -17,7 +16,7 @@ export default function Events() {
   const [editingEvent, setEditingEvent] = useState(null);
 
   const queryClient = useQueryClient();
-  // Fetch events
+
   const {
     data: events,
     isLoading,
@@ -27,7 +26,6 @@ export default function Events() {
     queryFn: getEvents,
   });
 
-  // Mutations
   const createEventMutation = useMutation({
     mutationFn: createEvent,
     onSuccess: () => {
@@ -40,7 +38,7 @@ export default function Events() {
     mutationFn: ({ id, data }) => updateEvent(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["events"] });
-      setEditingEvent(null); // Clear editing state
+      setEditingEvent(null);
       resetForm();
     },
   });
@@ -55,13 +53,11 @@ export default function Events() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (editingEvent) {
-      // Update existing event
       updateEventMutation.mutate({
         id: editingEvent._id,
         data: { title, description, date, location },
       });
     } else {
-      // Add new event
       createEventMutation.mutate({ title, description, date, location });
     }
   };
@@ -74,7 +70,6 @@ export default function Events() {
   }
 
   function formatDateForInput(dateString) {
-    // Convert date string to YYYY-MM-DD format
     const date = new Date(dateString);
     return date.toISOString().split("T")[0];
   }

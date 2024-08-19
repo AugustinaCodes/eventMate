@@ -32,7 +32,6 @@ export default function Attendees() {
     queryFn: getEvents,
   });
 
-  // Mutations
   const createAttendeeMutation = useMutation({
     mutationFn: createAttendee,
     onSuccess: () => {

@@ -1,48 +1,50 @@
+@import "../../styles/variables.scss";
+
 .sidebar {
-    width: 250px;
-    padding: 20px;
-    background-color: #4287f5;
-    height: 100vh;
-    position: fixed;
-    left: 0;
-    top: 0;
+  width: 250px;
+  padding: 20px;
+  background-color: $background-color;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+.userSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logoutButton {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: $warning-color;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: darken($warning-color, 15%);
   }
-  
-  .userSection {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .logoutButton {
-    margin-top: 10px;
-    padding: 10px;
-    background-color: #FF4500;
+}
+
+.navButtons {
+  margin-top: 20px;
+}
+
+.navButtons button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background-color: $secondary-color;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+
+  &.active {
+    background-color: $warning-color;
     color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
   }
-  
-  .logoutButton:hover {
-    background-color: #3266ba;
-  }
-  
-  .navButtons {
-    margin-top: 20px;
-  }
-  
-  .navButtons button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    background-color: #969595;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-bottom: 10px;
-  }
-  
-  .navButtons button.active {
-    background-color: #FF4500;
-    color: white;
-  }
+}

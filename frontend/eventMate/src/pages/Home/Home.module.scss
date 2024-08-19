@@ -6,41 +6,40 @@
   background-color: $background-color;
 }
 
-.leftPane {
+.leftPane,
+.rightPane {
   flex: 1;
+  padding: 20px;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+}
+
+.leftPane {
   background-color: $background-color;
+  flex-direction: column;
 }
 
 .icon {
-  font-size: 80px;
+  font-size: $font-size-xxlarge;
   color: white;
   margin-bottom: 20px;
 }
 
 .companyName {
-  font-family: "Arkhip", sans-serif;
+  font-family: $font-family-heading;
   color: white;
-  font-size: 36px;
+  font-size: $font-size-xlarge;
   margin-bottom: 10px;
 }
 
 .slogan {
-  font-family: "CelebriSans-Bold", sans-serif;
+  font-family: $font-family-heading;
   color: white;
-  font-size: 24px;
+  font-size: $font-size-large;
 }
 
 .rightPane {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
   background-color: white;
 }
 
@@ -52,8 +51,8 @@
 
 .button {
   padding: 10px 20px;
-  font-size: 18px;
-  background-color: #4287f5;
+  font-size: $font-size-large;
+  background-color: $background-color;
   color: white;
   border: none;
   border-radius: 5px;
@@ -61,7 +60,7 @@
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #3266ba;
+    background-color: darken($background-color, 15%);
     transform: scale(1.05);
   }
 }
