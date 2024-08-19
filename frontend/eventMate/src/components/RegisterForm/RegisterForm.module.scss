@@ -28,21 +28,37 @@ h2 {
   text-align: center;
 }
 
-input {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  width: calc(100% - 20px);
-  margin: 0 auto; /* Center the inputs */
-  box-sizing: border-box;
+/* Styles for the input fields in the form */
+.inputContainer {
+  width: calc(100% - 20px); /* Adjust for padding */
+  margin: 0 auto;
+
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+
+  input:focus {
+    outline: none;
+    border-color: #2a78f5;
+  }
+
+  .error {
+    color: #dc3545; /* Red color for error messages */
+    background-color: white;
+    font-size: 14px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    padding: 5px;
+  }
 }
 
-input:focus {
-  outline: none;
-  border-color: #2a78f5;
-}
-
+/* Styles for the password field and visibility toggle button */
 .passwordContainer {
   position: relative;
   width: calc(100% - 20px); /* Adjust for padding */
@@ -50,6 +66,11 @@ input:focus {
 
   input {
     width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
   }
 }
 
@@ -76,6 +97,7 @@ input:focus {
   }
 }
 
+/* Styles for the submit button */
 .submitButton {
   padding: 10px;
   background-color: #FF4500;
@@ -94,6 +116,7 @@ input:focus {
   }
 }
 
+/* Styles for the success message */
 .successMessage {
   text-align: center;
   color: #243665;
@@ -124,6 +147,7 @@ input:focus {
   }
 }
 
+/* Styles for the back button */
 .backButton {
   background-color: #ccc; /* Example color */
   border: none;
@@ -135,19 +159,9 @@ input:focus {
   transition: background-color 0.3s ease;
   margin: 0 auto; /* Center the back button */
   width: calc(100% - 20px);
-}
 
-.backButton:hover {
-  background-color: #f0eeee; 
-  transform: scale(1.05);
-}
-
-.error {
-  color: #dc3545; /* Red color for error messages */
-  background-color: white;
-  font-size: 14px;
-  margin-top: -10px;
-  margin-bottom: 10px;
-  border-radius: 4px;
-  padding: 5px;
+  &:hover {
+    background-color: #f0eeee;
+    transform: scale(1.05);
+  }
 }

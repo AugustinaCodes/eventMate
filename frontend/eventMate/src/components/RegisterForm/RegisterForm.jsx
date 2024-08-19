@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { validateUser } from "../../validation/userValidation";
 import SuccessMessage from "./SuccessMessage";
 import PasswordToggle from "./PasswordToggle";
+import InputField from "./InputField";
 
 export default function RegisterForm() {
   const [firstName, setFirstName] = useState("");
@@ -97,42 +98,38 @@ export default function RegisterForm() {
     <div className={styles.formContainer}>
       <form onSubmit={handleSubmit} className={styles.form}>
         <h2>Register</h2>
-        <input
+        <InputField
           type="text"
           placeholder="First Name"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
-          required
+          error={errors.firstName}
         />
-        {errors.firstName && <p className={styles.error}>{errors.firstName}</p>}
-        <input
+        <InputField
           type="text"
           placeholder="Last Name"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
-          required
+          error={errors.lastName}
         />
-        {errors.lastName && <p className={styles.error}>{errors.lastName}</p>}
-        <input
+        <InputField
           type="text"
           placeholder="Username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          required
+          error={
+            usernameExists
+              ? "Username already exists. Please choose another."
+              : ""
+          }
         />
-        {usernameExists && (
-          <p className={styles.error}>
-            Username already exists. Please choose another.
-          </p>
-        )}
-        <input
+        <InputField
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          required
+          error={errors.email}
         />
-        {errors.email && <p className={styles.error}>{errors.email}</p>}
         <PasswordToggle
           passwordVisible={passwordVisible}
           togglePasswordVisibility={() => setPasswordVisible(!passwordVisible)}
