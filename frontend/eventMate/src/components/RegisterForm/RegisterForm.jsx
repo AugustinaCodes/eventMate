@@ -5,6 +5,7 @@ import styles from "./RegisterForm.module.scss";
 import { useNavigate } from "react-router-dom";
 import { validateUser } from "../../validation/userValidation";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import SuccessMessage from "./SuccessMessage";
 
 export default function RegisterForm() {
   const [firstName, setFirstName] = useState("");
@@ -63,19 +64,7 @@ export default function RegisterForm() {
   }
 
   if (isSuccess) {
-    return (
-      <div className={styles.successMessage}>
-        <h2>Registration Successful</h2>
-        <p>You can now log in with your username and password.</p>
-        <p>
-          Redirecting back to the login page in <strong>{countdown}</strong>{" "}
-          seconds...
-        </p>
-        <button onClick={() => navigate("/login")}>
-          Go back to the login page now
-        </button>
-      </div>
-    );
+    return <SuccessMessage countdown={countdown} navigate={navigate} />;
   }
 
   function handleSubmit(e) {
@@ -160,14 +149,6 @@ export default function RegisterForm() {
             {passwordVisible ? <FaEyeSlash /> : <FaEye />}
           </button>
         </div>
-        {/* <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        {errors.password && <p className={styles.error}>{errors.password}</p>} */}
         <button type="submit" className={styles.submitButton}>
           Register
         </button>
