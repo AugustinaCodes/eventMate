@@ -9,9 +9,9 @@ import { validateJwt } from "../middleware/validateJwtMiddleware.js"
 
 const router = express.Router();
 
-router.post("/events", validateJwt, createEvent);
-router.put("/events/:id", validateJwt, updateEvent);
-router.delete("/events/:id", validateJwt, deleteEvent);
-router.get("/events", validateJwt, getEvents);
+router.post("/main/events", validateJwt, createEvent);
+router.put("/main/events/:id", validateJwt, updateEvent);
+router.delete("/main/events/:id", validateJwt, deleteEvent);
+router.get("/main/events", validateJwt, getEvents);
 
 export default router;

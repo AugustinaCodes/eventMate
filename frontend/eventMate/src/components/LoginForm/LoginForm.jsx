@@ -23,7 +23,7 @@ export default function LoginForm() {
     try {
       const response = await axios.post(`${API_URL}/login`, body);
       localStorage.setItem("token", response.data.token);
-      navigate("/dashboard");
+      navigate("/main");
     } catch (error) {
       setError(
         "Login unsuccessful. Please check your credentials and try again."

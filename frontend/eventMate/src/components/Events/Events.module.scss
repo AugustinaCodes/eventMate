@@ -1,0 +1,93 @@
+.eventsContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+  }
+  
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .eventForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .eventForm input {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .eventForm button {
+    padding: 10px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .eventForm button:hover {
+    background-color: #0056b3;
+  }
+  
+  .eventList {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .eventItem {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+    position: relative;
+  }
+  
+  .eventItem h3 {
+    margin: 0 0 10px;
+    font-size: 1.5rem;
+  }
+  
+  .eventItem p {
+    margin: 0 0 5px;
+  }
+  
+  .updateButton, .deleteButton {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-right: 10px;
+  }
+  
+  .updateButton {
+    background-color: #28a745;
+    color: #fff;
+    transition: background-color 0.3s ease;
+  }
+  
+  .updateButton:hover {
+    background-color: #218838;
+  }
+  
+  .deleteButton {
+    background-color: #dc3545;
+    color: #fff;
+    transition: background-color 0.3s ease;
+  }
+  
+  .deleteButton:hover {
+    background-color: #c82333;
+  }
