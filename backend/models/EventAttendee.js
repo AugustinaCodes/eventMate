@@ -22,10 +22,6 @@ const eventAttendeeSchema = new mongoose.Schema({
     ref: "Event",
     required: true,
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
 });
 
 export default mongoose.model("EventAttendee", eventAttendeeSchema);
