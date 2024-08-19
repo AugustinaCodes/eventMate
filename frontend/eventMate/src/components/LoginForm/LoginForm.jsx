@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./LoginForm.module.scss";
 import axios from "axios";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+import PasswordToggle from "../PasswordToggle/PasswordToggle";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -42,29 +42,12 @@ export default function LoginForm() {
           onChange={(e) => setUsername(e.target.value)}
           required
         />
-        <div className={styles.passwordContainer}>
-          <input
-            type={passwordVisible ? "text" : "password"}
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <button
-            type="button"
-            className={styles.eyeButton}
-            onClick={() => setPasswordVisible(!passwordVisible)}
-          >
-            {passwordVisible ? <FaEyeSlash /> : <FaEye />}
-          </button>
-        </div>
-        {/* <input
-          type="password"
-          placeholder="Password"
+        <PasswordToggle
+          passwordVisible={passwordVisible}
+          togglePasswordVisibility={() => setPasswordVisible(!passwordVisible)}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required
-        /> */}
+        />
         <button type="submit" className={styles.submitButton}>
           Login
         </button>

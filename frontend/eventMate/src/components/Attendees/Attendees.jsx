@@ -15,16 +15,17 @@ export default function Attendees() {
   const [email, setEmail] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [selectedEvent, setSelectedEvent] = useState("");
+  const [editingAttendee, setEditingAttendee] = useState(null);
 
   const queryClient = useQueryClient();
 
   const {
     data: attendees,
-    isLoading,
-    error,
+    isLoading: isLoadingAttendees,
+    error: error,
   } = useQuery({
     queryKey: ["attendees"],
-    queryFn: () => getAttendees(),
+    queryFn: getAttendees,
   });
   const { data: events } = useQuery({
     queryKey: ["events"],
@@ -34,70 +35,93 @@ export default function Attendees() {
   // Mutations
   const createAttendeeMutation = useMutation({
     mutationFn: createAttendee,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["attendees"] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["attendees"] });
+      resetForm();
+    },
+    onError: (error) => console.error("Error creating attendee:", error),
   });
 
   const updateAttendeeMutation = useMutation({
     mutationFn: ({ id, data }) => updateAttendee(id, data),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["attendees"] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["attendees"] });
+      setEditingAttendee(null);
+      resetForm();
+    },
   });
 
   const deleteAttendeeMutation = useMutation({
     mutationFn: (id) => deleteAttendee(id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["attendees"] }),
+    onError: (error) => console.error("Error deleting attendee:", error),
   });
 
-  const handleAddAttendee = () => {
-    createAttendeeMutation.mutate({
-      firstName,
-      lastName,
-      email,
-      dateOfBirth,
-      event: selectedEvent, // Include the event ID
-    });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (editingAttendee) {
+      updateAttendeeMutation.mutate({
+        id: editingAttendee._id,
+        data: { firstName, lastName, email, dateOfBirth, event: selectedEvent },
+      });
+    } else {
+      createAttendeeMutation.mutate({
+        firstName,
+        lastName,
+        email,
+        dateOfBirth,
+        event: selectedEvent,
+      });
+    }
+  };
 
-    // Clear form fields after submission
+  const resetForm = () => {
     setFirstName("");
     setLastName("");
     setEmail("");
     setDateOfBirth("");
     setSelectedEvent("");
+    setEditingAttendee(null);
   };
-
-  if (isLoading) return <div>Loading attendees...</div>;
+  if (isLoadingAttendees) return <div>Loading attendees...</div>;
   if (error) return <div>Error loading attendees</div>;
 
   return (
     <div className={styles.attendeesContainer}>
       <h2>Event Attendees</h2>
-      <div className={styles.addAttendeeForm}>
+      <form onSubmit={handleSubmit} className={styles.addAttendeeForm}>
         <input
           type="text"
           placeholder="First Name"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
+          required
         />
         <input
           type="text"
           placeholder="Last Name"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
+          required
         />
         <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
         <input
           type="date"
           placeholder="Date of Birth"
           value={dateOfBirth}
           onChange={(e) => setDateOfBirth(e.target.value)}
+          required
         />
         <select
           value={selectedEvent}
           onChange={(e) => setSelectedEvent(e.target.value)}
+          required
         >
           <option value="" disabled>
             Select Event
@@ -109,8 +133,10 @@ export default function Attendees() {
               </option>
             ))}
         </select>
-        <button onClick={handleAddAttendee}>Add Attendee</button>
-      </div>
+        <button type="submit">
+          {editingAttendee ? "Update Attendee" : "Add Attendee"}
+        </button>
+      </form>
 
       <table className={styles.attendeeTable}>
         <thead>
@@ -133,14 +159,16 @@ export default function Attendees() {
               <td>{attendee.event?.title || "No Event"}</td>
               <td>
                 <button
-                  onClick={() =>
-                    updateAttendeeMutation.mutate({
-                      id: attendee._id,
-                      data: { firstName: "Updated First Name" }, // Example update
-                    })
-                  }
+                  onClick={() => {
+                    setFirstName(attendee.firstName);
+                    setLastName(attendee.lastName);
+                    setEmail(attendee.email);
+                    setDateOfBirth(attendee.dateOfBirth.slice(0, 10));
+                    setSelectedEvent(attendee.event?._id || "");
+                    setEditingAttendee(attendee);
+                  }}
                 >
-                  Update
+                  Edit
                 </button>
                 <button
                   onClick={() => deleteAttendeeMutation.mutate(attendee._id)}

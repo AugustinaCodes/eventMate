@@ -73,6 +73,12 @@ export default function Events() {
     setLocation("");
   }
 
+  function formatDateForInput(dateString) {
+    // Convert date string to YYYY-MM-DD format
+    const date = new Date(dateString);
+    return date.toISOString().split("T")[0];
+  }
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error loading events</div>;
   return (
@@ -94,7 +100,7 @@ export default function Events() {
           required
         />
         <input
-          type="datetime-local"
+          type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
           required
@@ -121,7 +127,7 @@ export default function Events() {
               onClick={() => {
                 setTitle(event.title);
                 setDescription(event.description);
-                setDate(event.date);
+                setDate(formatDateForInput(event.date));
                 setLocation(event.location);
                 setEditingEvent(event);
               }}

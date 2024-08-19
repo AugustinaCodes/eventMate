@@ -1,4 +1,4 @@
-import styles from "./RegisterForm.module.scss";
+import styles from "./PasswordToggle.module.scss";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function PasswordToggle({

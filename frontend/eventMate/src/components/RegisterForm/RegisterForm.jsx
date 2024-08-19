@@ -5,7 +5,7 @@ import styles from "./RegisterForm.module.scss";
 import { useNavigate } from "react-router-dom";
 import { validateUser } from "../../validation/userValidation";
 import SuccessMessage from "./SuccessMessage";
-import PasswordToggle from "./PasswordToggle";
+import PasswordToggle from "../PasswordToggle/PasswordToggle";
 import InputField from "./InputField";
 
 export default function RegisterForm() {
