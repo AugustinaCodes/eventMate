@@ -15,7 +15,7 @@ export function validateJwt(req, res, next) {
 
   try {
     const decoded = jwt.verify(token, secretKey);
-    req.user = decoded; 
+    req.user = decoded;
     next();
   } catch (error) {
     res.status(403).json({ message: "Unauthorized" });

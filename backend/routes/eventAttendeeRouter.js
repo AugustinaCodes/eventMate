@@ -1,6 +1,12 @@
 import express from "express";
 import { validateJwt } from "../middleware/validateJwtMiddleware.js";
-import { createAttendee, deleteAttendee, getAttendeeById, getAttendees, updateAttendee } from "../controllers/eventAttendeeControllers.js";
+import {
+  createAttendee,
+  deleteAttendee,
+  getAttendeeById,
+  getAttendees,
+  updateAttendee,
+} from "../controllers/eventAttendeeControllers.js";
 
 const router = express.Router();
 

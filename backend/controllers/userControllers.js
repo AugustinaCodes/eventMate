@@ -1,7 +1,7 @@
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -44,7 +44,9 @@ export async function loginUser(req, res) {
   const { username, password } = req.body;
 
   if (!username || !password) {
-    return res.status(400).json({ error: "Username and password are required"})
+    return res
+      .status(400)
+      .json({ error: "Username and password are required" });
   }
 
   const user = await User.findOne({ username });
@@ -57,11 +59,15 @@ export async function loginUser(req, res) {
 
   if (isPasswordCorrect) {
     const secretKey = process.env.SECRET_KEY;
-    const token = jwt.sign({ id: user._id, username: user.username}, secretKey, { expiresIn: "1h"})
+    const token = jwt.sign(
+      { id: user._id, username: user.username },
+      secretKey,
+      { expiresIn: "1h" }
+    );
 
-    res.json({ token })
+    res.json({ token });
   } else {
-    res.status(401).json({ message: "Password incorrect"})
+    res.status(401).json({ message: "Password incorrect" });
   }
 }
 
@@ -73,15 +79,15 @@ export async function getUsers(req, res) {
 
 export async function checkUsernameExists(req, res) {
   try {
-      const { username } = req.params;
-      const user = await User.findOne({ username });
+    const { username } = req.params;
+    const user = await User.findOne({ username });
 
-      if (user) {
-          return res.status(200).json({ exists: true });
-      }
+    if (user) {
+      return res.status(200).json({ exists: true });
+    }
 
-      res.status(200).json({ exists: false });
+    res.status(200).json({ exists: false });
   } catch (error) {
-      res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: "Internal server error" });
   }
 }

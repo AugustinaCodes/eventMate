@@ -5,7 +5,7 @@ import {
   getEvents,
   updateEvent,
 } from "../controllers/eventControllers.js";
-import { validateJwt } from "../middleware/validateJwtMiddleware.js"
+import { validateJwt } from "../middleware/validateJwtMiddleware.js";
 
 const router = express.Router();
 
