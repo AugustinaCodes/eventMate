@@ -34,6 +34,7 @@ export async function createAttendee(req, res) {
 
 export async function getAttendeeById(req, res) {
   const { id } = req.params;
+
   try {
     const attendee = await EventAttendee.findById(id).populate("event");
     if (!attendee) {
@@ -51,13 +52,15 @@ export async function getAttendees(req, res) {
     const attendees = await EventAttendee.find().populate("event");
     res.status(200).json(attendees);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.log("Error fetching attendees", error);
+    res.status(500).json({ error: "Error occured while fetching attendees" });
   }
 }
 
 export async function updateAttendee(req, res) {
   const { id } = req.params;
   const { firstName, lastName, dateOfBirth, email } = req.body;
+
   try {
     const attendee = await EventAttendee.findByIdAndUpdate(id);
     if (!attendee) {
@@ -69,7 +72,9 @@ export async function updateAttendee(req, res) {
     attendee.dateOfBirth = dateOfBirth;
     attendee.email = email;
 
-    res.status(200).json(attendee);
+    await attendee.save();
+
+    res.status(200).json({ message: "Attendee updated successfully", attendee });
   } catch (error) {
     console.log("Error updating attendee", error);
     res
@@ -80,6 +85,7 @@ export async function updateAttendee(req, res) {
 
 export async function deleteAttendee(req, res) {
   const { id } = req.params;
+
   try {
     const deletedAttendee = await EventAttendee.findByIdAndDelete(id);
     if (!deletedAttendee) {
@@ -87,6 +93,9 @@ export async function deleteAttendee(req, res) {
     }
     res.status(200).json({ message: "Attendee deleted successfully" });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.log("Error deleting attendee", error);
+    res
+      .status(500)
+      .json({ error: "Error occured while deleting the attendee" });
   }
 }
